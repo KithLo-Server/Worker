@@ -46,7 +46,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --de
 
 # Install Android SDK & NDK
 RUN curl -fsSL https://dl.google.com/android/cli/latest/linux_arm64/install_root.sh | bash && \
-    android sdk --no-metrics install "platforms/android-37.2" "build-tools/36.0.0" "platform-tools" "ndk/30.0.16248370"
+    android sdk --no-metrics install "platforms/android-37.2" "build-tools/37.0.0-rc2" "platform-tools" "ndk/30.0.16248370"
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash - \

@@ -1,0 +1,29 @@
+# --- Native ARM64 (Ports) ---
+Types: deb
+URIs: http://ports.ubuntu.com/ubuntu-ports/
+Suites: resolute resolute-updates resolute-backports
+Components: main restricted universe multiverse
+Architectures: arm64
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+Types: deb
+URIs: http://ports.ubuntu.com/ubuntu-ports/
+Suites: resolute-security
+Components: main restricted universe multiverse
+Architectures: arm64
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+# --- Foreign AMD64 (Archive) ---
+Types: deb
+URIs: http://archive.ubuntu.com/ubuntu/
+Suites: resolute resolute-updates resolute-backports
+Components: main restricted universe multiverse
+Architectures: amd64
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+
+Types: deb
+URIs: http://security.ubuntu.com/ubuntu/
+Suites: resolute-security
+Components: main restricted universe multiverse
+Architectures: amd64
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg

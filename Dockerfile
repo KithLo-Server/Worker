@@ -70,7 +70,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --de
     && cargo install cargo-ndk --locked \
     && rm -rf /usr/local/cargo/registry /usr/local/cargo/git
 
-# Install Android Command-line Tools (SDK Manager)
+# Install Android Command-line Tools (Android CLI)
 RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
     curl -fSL "https://dl.google.com/android/repository/commandlinetools-linux-16111833_latest.zip" -o /tmp/cmdline-tools.zip && \
     unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools && \
@@ -78,8 +78,9 @@ RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
     rm /tmp/cmdline-tools.zip
 
 # Accept Android SDK licenses & install SDK 36 + build-tools
-RUN yes | sdkmanager --licenses > /dev/null 2>&1 || true && \
-    sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
+RUN java -version && \
+    yes | android sdk --licenses > /dev/null 2>&1 || true; \
+    android sdk --install --channel=0 "platforms;android-36" "build-tools;36.0.0" "platform-tools"
 
 # Install Android NDK (architecture-aware)
 RUN ARCH=$(uname -m) && \

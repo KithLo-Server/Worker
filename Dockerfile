@@ -57,9 +57,8 @@ Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n" > /etc/apt/sources.
     nsis \
     && rm -rf /var/lib/apt/lists/*
 
-# Dynamic JAVA_HOME setup
-RUN ARCH=$(dpkg --print-architecture) && \
-    ln -s /usr/lib/jvm/java-25-openjdk-${ARCH} /usr/lib/jvm/default-java
+# Static JAVA_HOME setup
+RUN ln -s /usr/lib/jvm/java-25-openjdk-arm64 /usr/lib/jvm/default-java
 ENV JAVA_HOME=/usr/lib/jvm/default-java
 ENV PATH=/usr/local/cargo/bin:$JAVA_HOME/bin:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
 

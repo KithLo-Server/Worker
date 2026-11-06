@@ -11,12 +11,6 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     NDK_HOME=/opt/android-ndk/latest
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    qemu-user-binfmt \
-    binfmt-support \
-    libc6:amd64 \
-    libstdc++6:amd64 \
-    libncurses6:amd64 \
-    zlib1g:amd64 \
     curl \
     git \
     bash \

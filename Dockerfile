@@ -6,9 +6,7 @@ ENV RUN_AS_ROOT=true \
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     ANDROID_HOME=/opt/android-sdk \
-    ANDROID_SDK_ROOT=/opt/android-sdk \
-    ANDROID_NDK_HOME=/opt/android-ndk/latest \
-    NDK_HOME=/opt/android-ndk/latest
+    ANDROID_SDK_ROOT=/opt/android-sdk
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \

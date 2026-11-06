@@ -8,7 +8,31 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     ANDROID_HOME=/opt/android-sdk \
     ANDROID_SDK_ROOT=/opt/android-sdk
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN dpkg --add-architecture amd64 && \
+    # 1. Scope default ARM repos so they ignore amd64
+    sed -i 's/Types: deb/Types: deb\nArchitectures: arm64/g' /etc/apt/sources.list.d/ubuntu.sources && \
+    CODENAME=resolute && \
+    # 2. Add standard Ubuntu repos for amd64 binaries
+    printf "Types: deb\n\
+URIs: http://archive.ubuntu.com/ubuntu/\n\
+Suites: ${CODENAME} ${CODENAME}-updates ${CODENAME}-backports\n\
+Components: main restricted universe multiverse\n\
+Architectures: amd64\n\
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\n\
+Types: deb\n\
+URIs: http://security.ubuntu.com/ubuntu/\n\
+Suites: ${CODENAME}-security\n\
+Components: main restricted universe multiverse\n\
+Architectures: amd64\n\
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n" > /etc/apt/sources.list.d/amd64.sources && \
+    # 3. Refresh and install
+    apt-get update && apt-get install -y --no-install-recommends \
+    qemu-user-binfmt \
+    binfmt-support \
+    libc6:amd64 \
+    libstdc++6:amd64 \
+    libncurses6:amd64 \
+    zlib1g:amd64 \
     curl \
     git \
     bash \

@@ -10,26 +10,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     ANDROID_NDK_HOME=/opt/android-ndk/latest \
     NDK_HOME=/opt/android-ndk/latest
 
-# Enable multi-arch execution for x86_64 NDK binaries inside an ARM64 container
-RUN dpkg --add-architecture amd64 && \
-    # 1. Scope default ARM repos so they ignore amd64
-    sed -i 's/Types: deb/Types: deb\nArchitectures: arm64/g' /etc/apt/sources.list.d/ubuntu.sources && \
-    CODENAME=resolute && \
-    # 2. Add standard Ubuntu repos for amd64 binaries
-    printf "Types: deb\n\
-URIs: http://archive.ubuntu.com/ubuntu/\n\
-Suites: ${CODENAME} ${CODENAME}-updates ${CODENAME}-backports\n\
-Components: main restricted universe multiverse\n\
-Architectures: amd64\n\
-Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\n\
-Types: deb\n\
-URIs: http://security.ubuntu.com/ubuntu/\n\
-Suites: ${CODENAME}-security\n\
-Components: main restricted universe multiverse\n\
-Architectures: amd64\n\
-Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n" > /etc/apt/sources.list.d/amd64.sources && \
-    # 3. Refresh and install
-    apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     qemu-user-binfmt \
     binfmt-support \
     libc6:amd64 \

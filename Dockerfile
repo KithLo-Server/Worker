@@ -69,26 +69,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --de
     && cargo install cargo-ndk --locked \
     && rm -rf /usr/local/cargo/registry /usr/local/cargo/git
 
-# Install Android Command-line Tools (Android CLI)
-RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
-    curl -fSL "https://dl.google.com/android/repository/commandlinetools-linux-16111833_latest.zip" -o /tmp/cmdline-tools.zip && \
-    unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools && \
-    mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest && \
-    rm /tmp/cmdline-tools.zip
-
-# Accept Android SDK licenses & install SDK 36 + build-tools
-RUN java -version && \
-    yes | android sdk --licenses > /dev/null 2>&1 || true; \
-    android sdk --install --channel=0 "platforms;android-36" "build-tools;36.0.0" "platform-tools"
-
-# Install Android NDK (architecture-aware)
-RUN ARCH=$(uname -m) && \
-    NDK_ZIP="android-ndk-r27c-linux.zip" && \
-    curl -fSL "https://dl.google.com/android/repository/${NDK_ZIP}" -o /tmp/ndk.zip && \
-    mkdir -p /opt/android-ndk && \
-    unzip -q /tmp/ndk.zip -d /opt/android-ndk && \
-    ln -s /opt/android-ndk/android-ndk-* /opt/android-ndk/latest && \
-    rm -f /tmp/ndk.zip
+# Install Android SDK & NDK
+RUN curl -fsSL https://dl.google.com/android/cli/latest/linux_arm64/install_root.sh | bash && \
+    android sdk --no-metrics install "platforms/android-37.2" "build-tools/36.0.0" "platform-tools" "ndk/30.0.16248370"
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash - \

@@ -1,8 +1,6 @@
 FROM ubuntu:resolute
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV RUN_AS_ROOT=true \
-    UNSET_CONFIG_VARS=true
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     ANDROID_HOME=/opt/android-sdk \
